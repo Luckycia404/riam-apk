@@ -1,3 +1,40 @@
-ÕTÁjÜ0½û+†ÍÅŞu“öšÛ%)KR²))” íØÖÖ+¥#Ù4-ù÷2²ãI¡‡êƒ±æ½yódt jÚÂÉÖèÃú49çI›*F:TŞRŒ¨WEc7xXO’x$“å..?}ùtu}[m</—‹Õ*¹ÊîÄ7i*+¾·ˆ†´Ü‰÷ÖŸ[ÂŠlk6k¤N+ÎKò—vƒ·Ú×ªÚïÒ†‡›˜¦hº|·ö~‹ÊÃÑ|­L^í-ˆä#ÈgÁ~%¡dëôOd\Ahº7§°/^¡©|î)ó@àÑ”Qø¼÷z¥%H¹F4œõ9èÙŒ»¾úPy
-H‡e6z¸ÚÛ>k{í­ä 7ü(kœUK‚©¤Jğ—‹¦YåÏ7çKŞ`•LÛ4b•—3Í
-p4é(šÁŞí)¡Á56(ş©É×súˆF§NÜ·e‰Äó÷`J6UéK79ğÛ–¡.ôF¡î+G|£ª%BãEoÔì?'ÎAxhĞÀ_Èy2êá1ÂˆN%g‘H9©ï €¨>²%:+˜ûÏçÏ7‰ tmã¡«ãã5_ÌTÚ¬’Óè(˜Ğ·dÂ¥“FjÙ<yJ~
+#include <jni.h>
+#include <string>
+#include <vector>
+#include <cstring>
+#include "node.h"
+
+extern "C" JNIEXPORT jint JNICALL
+Java_com_kango_queenriam_BotForegroundService_startNodeWithArguments(
+        JNIEnv *env,
+        jobject /* this */,
+        jobjectArray arguments) {
+
+    jsize argc = env->GetArrayLength(arguments);
+    int c_arguments_size = 0;
+
+    for (int i = 0; i < argc; i++) {
+        jstring arg = (jstring) env->GetObjectArrayElement(arguments, i);
+        const char *arg_chars = env->GetStringUTFChars(arg, nullptr);
+        c_arguments_size += strlen(arg_chars) + 1;
+        env->ReleaseStringUTFChars(arg, arg_chars);
+    }
+
+    char *args_buffer = (char *) calloc(c_arguments_size, sizeof(char));
+    char *argv[argc];
+    char *current_arg = args_buffer;
+
+    for (int i = 0; i < argc; i++) {
+        jstring arg = (jstring) env->GetObjectArrayElement(arguments, i);
+        const char *arg_chars = env->GetStringUTFChars(arg, nullptr);
+        size_t len = strlen(arg_chars) + 1;
+        strncpy(current_arg, arg_chars, len);
+        argv[i] = current_arg;
+        current_arg += len;
+        env->ReleaseStringUTFChars(arg, arg_chars);
+    }
+
+    int node_result = node::Start(argc, argv);
+    free(args_buffer);
+    return jint(node_result);
+}

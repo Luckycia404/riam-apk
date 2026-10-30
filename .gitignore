@@ -1,2 +1,8 @@
-]1Â0E÷œÂ¨[$’3°3±0"71%"uBí 5tÅÖ{úöà\f…ïijj*ÈÂB‘Xf1øİ‡³æĞ7­8×LÆp} Ê©Ö~•û·ˆŠ#
-(*!‘TØ›Íû\ÿùh¿Æ:yå¤ôKG»µ]kš	FÏV¥—NÄ´ RZ•Æ5·)±˜Ûó†vå?
+node_modules/
+bot-engine/node_modules/
+bot-engine/session/
+bot-engine/tmp/
+bot-engine/temp/
+bot-engine/data/.session_vault/
+dist/
+*.zip

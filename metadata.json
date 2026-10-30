@@ -1,0 +1,6 @@
+{
+  "name": "Queen Riam Codebase & Security Analyzer",
+  "description": "Deep architectural, plugin, dependency, and security audit workbench for the Queen Riam WhatsApp bot archive.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
